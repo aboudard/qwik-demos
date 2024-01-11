@@ -12,6 +12,8 @@ export default component$(() => {
         <li><a href="/binding">Binding</a></li>
         <li><a href="/visible">Visible</a></li>
         <li><a href="/data">Data</a></li>
+        <li><a href="/delay">Delay</a></li>
+        <li><a href="/context">Context</a></li>
       </ul>
       <p>
         Can't wait to see what you build with qwik!
