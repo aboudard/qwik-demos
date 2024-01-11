@@ -10,6 +10,8 @@ export default component$(() => {
         <li><a href="/counter">Counter</a></li>
         <li><a href="/counter-store">Counter Store</a></li>
         <li><a href="/binding">Binding</a></li>
+        <li><a href="/visible">Visible</a></li>
+        <li><a href="/data">Data</a></li>
       </ul>
       <p>
         Can't wait to see what you build with qwik!
