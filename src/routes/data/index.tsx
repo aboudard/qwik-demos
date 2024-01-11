@@ -1,6 +1,12 @@
-import { component$, useStore } from '@builder.io/qwik';
+import { component$, useSignal, useStore } from '@builder.io/qwik';
 import { server$ } from '@builder.io/qwik-city';
 
+const stream = server$(async function* () {
+  for (let i = 0; i < 10; i++) {
+    yield i;
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+  }
+});
 
 const serverList = server$(() => {
     return [
@@ -12,24 +18,33 @@ const serverList = server$(() => {
 
 export default component$(() => {
 
+  const message = useSignal('');
   const list = useStore<{id: number, name: string, likes: number}[]>([]);
 
   return (
     <div>
       <button onClick$={async () => {
         const response = await serverList();
-        console.log(response);
-
         for await (const item of response) {
           list.push(item);
         }
-
       }}>server</button>
+      <button
+        onClick$={async () => {
+          const response = await stream();
+          for await (const i of response) {
+            message.value += ` ${i}`;
+          }
+        }}
+      >
+        start
+      </button>
       <ul>
         {list.map((item, index) => (
           <li key={index}>{item.id} / {item.name} : [{item.likes}] <button onClick$={() => item.likes++}>like</button></li>
         ))}
       </ul>
+      <div>Message : {message.value}</div>
     </div>
   );
 });
